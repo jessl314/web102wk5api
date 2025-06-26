@@ -1,0 +1,9 @@
+.rover-container {
+    background-color:black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 95vh;
+    width: 70vh;
+    margin: 0;
+}
