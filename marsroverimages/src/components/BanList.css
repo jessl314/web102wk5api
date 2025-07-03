@@ -1,0 +1,67 @@
+.banlist {
+    position: fixed;
+    top: 0;
+    right: -250px;
+    width: 250px;
+    height: 100vh;
+    background-color: white;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: right 0.3s ease-in-out;
+}
+
+.banlist.open {
+    right: 0;
+}
+
+.hamburger {
+  width: 30px;
+  height: 22px;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+}
+
+.hamburger span {
+  display: block;
+  height: 3px;
+  background: black;
+  border-radius: 2px;
+  transition: 0.3s;
+  width: 100%;
+}
+
+/* Animate hamburger to X when open */
+.hamburger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+/* Menu styles */
+.menu {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  padding: 15px;
+  overflow-y: auto;
+  margin-top: 0px;
+}
+
+
