@@ -5,10 +5,14 @@ const ACCESS_KEY = import.meta.env.VITE_APP_NASA_API_KEY
 
 const rovers = ["curiosity"]
 
-const RoverContainer = () => {
+const RoverContainer = ({ bannedAttributes, onBan }) => {
     const [image, setImage] = useState(null);
     const [loading, setLoading] = useState(false);
     const [attributes, setAttributes] = useState([]);
+
+    const handleAttributeClick = (attr) => {
+      onBan(attr);
+    };
 
     const getImage = async () => {
         setLoading(true);
@@ -21,15 +25,39 @@ const RoverContainer = () => {
         const manifestData = await manifestRes.json();
 
         const validSols = manifestData.photo_manifest.photos;
-        const randomSolEntry = validSols[Math.floor(Math.random() * validSols.length)];
-        const randomSol = randomSolEntry.sol;
+        let imageFound = false;
+        let retries = 0;
+        const maxRetries = 10;
+        while (!imageFound && retries < maxRetries) {
+            retries++;
+            const randomSolEntry = validSols[Math.floor(Math.random() * validSols.length)];
+            const randomSol = randomSolEntry.sol;
 
-        const photoRes = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/${rover}/photos?sol=${randomSol}&api_key=${ACCESS_KEY}`);
-        const photoData = await photoRes.json()
-        const photos = photoData.photos;
+            const photoRes = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/${rover}/photos?sol=${randomSol}&api_key=${ACCESS_KEY}`);
+            const photoData = await photoRes.json()
+            const photos = photoData.photos;
 
-        if (photos.length > 0) {
-            const randomPhoto = photos[Math.floor(Math.random() * photos.length)];
+            const validPhotos = photos.filter((photo) => {
+
+            const attrs = [
+            { label: "Camera", value: photo.camera.full_name },
+            { label: "Sol", value: photo.sol },
+            { label: "Earth Date", value: photo.earth_date },
+            { label: "Status", value: photo.rover.status },
+            { label: "Landing Date", value: photo.rover.landing_date },
+            { label: "Launch Date", value: photo.rover.launch_date }
+            ];
+
+            return !attrs.some((attr) =>
+            bannedAttrs.some(
+                (b) => b.label === attr.label && b.value === attr.value
+            )
+            );
+        });
+
+
+        if (validPhotos.length > 0) {
+            const randomPhoto = validPhotos[Math.floor(Math.random() * validPhotos.length)];
             setImage(randomPhoto.img_src.replace("http://", "https://"))
 
             // getting attributes
@@ -40,12 +68,15 @@ const RoverContainer = () => {
                 { label: "Status", value: randomPhoto.rover.status },
                 { label: "Landing Date", value: randomPhoto.rover.landing_date},
                 { label: "Launching Date", value: randomPhoto.rover.launch_date}
-            ]
+            ];
+            
             setAttributes(attrs);
+            imageFound = true;
         } else {
             setImage(null);
             setAttributes([]);
         } 
+    }
     } catch (err) {
          console.error("Error fetching rover image:", err);
          setImage(null);
@@ -56,11 +87,12 @@ const RoverContainer = () => {
 
     }
 
+
     return (
         <div className="rover-container">
             <h1>Veni Veci!</h1>
             <h3>Here are some cool rover images!</h3>
-            {attributes.length > 0 && <AttributeDisplay attributes={attributes} />}
+            {attributes.length > 0 && <AttributeDisplay attributes={attributes} onClick={handleAttributeClick} />}
             <br></br>
             {loading && <p>Loading...</p>}
             {image ? <img src={image} alt="Mars Rover" className="rover-image"/> : !loading && <p>No image found. Try again!</p> }
