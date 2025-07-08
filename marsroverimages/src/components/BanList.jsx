@@ -11,14 +11,8 @@ const BanList = ({ bannedAttributes, onBan }) => {
     }
     return (
         <>
-            <div className={`hamburger ${isOpen ? 'open' : ''}`} onClick={toggleMenu}>
-                 {isOpen ? (
-                    <img src={close} alt="close ban list"/>
-                 ) : (
-                    <img src={menu} alt="open ban list"/>
-                 )}
-            </div>
-            <div className={`banlist ${isOpen ? 'open' : ''}`}>
+            
+            <div className="banlist">
                 <h3>Ban List</h3>
                 <nav className="menu">
                     {bannedAttributes.map((attr, index) => (

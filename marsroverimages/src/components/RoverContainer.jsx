@@ -9,7 +9,6 @@ const RoverContainer = ({ bannedAttributes, onBan, history, setHistory}) => {
     const [image, setImage] = useState(null);
     const [loading, setLoading] = useState(false);
     const [attributes, setAttributes] = useState([]);
-    const [bannedAttrs, setBannedAttrs] = useState([]);
 
     const handleAttributeClick = (attr) => {
       onBan(attr);
@@ -50,7 +49,7 @@ const RoverContainer = ({ bannedAttributes, onBan, history, setHistory}) => {
             ];
 
             return !attrs.some((attr) =>
-            bannedAttrs.some(
+            bannedAttributes.some(
                 (b) => b.label === attr.label && b.value === attr.value
             )
             );
