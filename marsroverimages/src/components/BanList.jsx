@@ -4,7 +4,7 @@ import menu from '../assets/hamburgermenu.svg';
 import close from '../assets/close.svg';
 
 
-const BanList = ({ bannedAttributes, onRemove }) => {
+const BanList = ({ bannedAttributes, onBan }) => {
     const [isOpen, setIsOpen] = useState(false);
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -25,7 +25,7 @@ const BanList = ({ bannedAttributes, onRemove }) => {
                         <div
                         key={index}
                         className="attr-rect"
-                        onClick={() => onRemove(attr)}
+                        onClick={() => onBan(attr)}
                         style={{ backgroundColor: "#fcc", cursor: "pointer" }}
                         >
                         <p><strong>{attr.label}</strong>: {attr.value}</p>

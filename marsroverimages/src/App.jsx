@@ -9,6 +9,7 @@ import History from './components/History'
 
 function App() {
   const [bannedattrs, setBannedAttrs] = useState([]);
+  const [history, setHistory] = useState([]);
 
   const handleBanAdd = (attr) => {
         setBannedAttrs((prev) => {
@@ -30,10 +31,12 @@ function App() {
   return (
     <>
     <div className="app-layout">
-      <History/>
+      <History history={history}/>
       <RoverContainer 
         bannedAttributes={bannedattrs}
         onBan={handleBanAdd}
+        history={history}
+        setHistory={setHistory}
       />
       <BanList
         bannedAttributes={bannedattrs}

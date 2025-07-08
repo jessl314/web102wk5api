@@ -5,10 +5,11 @@ const ACCESS_KEY = import.meta.env.VITE_APP_NASA_API_KEY
 
 const rovers = ["curiosity"]
 
-const RoverContainer = ({ bannedAttributes, onBan }) => {
+const RoverContainer = ({ bannedAttributes, onBan, history, setHistory}) => {
     const [image, setImage] = useState(null);
     const [loading, setLoading] = useState(false);
     const [attributes, setAttributes] = useState([]);
+    const [bannedAttrs, setBannedAttrs] = useState([]);
 
     const handleAttributeClick = (attr) => {
       onBan(attr);
@@ -58,7 +59,9 @@ const RoverContainer = ({ bannedAttributes, onBan }) => {
 
         if (validPhotos.length > 0) {
             const randomPhoto = validPhotos[Math.floor(Math.random() * validPhotos.length)];
-            setImage(randomPhoto.img_src.replace("http://", "https://"))
+            const imgURL = randomPhoto.img_src.replace("http://", "https://")
+            setImage(imgURL)
+            setHistory(prev => [...prev, imgURL]);
 
             // getting attributes
             const attrs = [
