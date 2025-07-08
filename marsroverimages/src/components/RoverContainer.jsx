@@ -21,6 +21,7 @@ const RoverContainer = ({ bannedAttributes, onBan, history, setHistory}) => {
         try {
         const rover = "curiosity"
         
+        // getting the data for curiosity and finding the Sols with valid photo data
         const manifestRes = await fetch(`https://api.nasa.gov/mars-photos/api/v1/manifests/${rover}?api_key=${ACCESS_KEY}`);
         const manifestData = await manifestRes.json();
 
@@ -28,8 +29,10 @@ const RoverContainer = ({ bannedAttributes, onBan, history, setHistory}) => {
         let imageFound = false;
         let retries = 0;
         const maxRetries = 10;
+        
         while (!imageFound && retries < maxRetries) {
             retries++;
+            // finding a random Sol to narrow down list of photos to choose from
             const randomSolEntry = validSols[Math.floor(Math.random() * validSols.length)];
             const randomSol = randomSolEntry.sol;
 
@@ -37,6 +40,7 @@ const RoverContainer = ({ bannedAttributes, onBan, history, setHistory}) => {
             const photoData = await photoRes.json()
             const photos = photoData.photos;
 
+            // filtering by banned attributes
             const validPhotos = photos.filter((photo) => {
 
             const attrs = [
@@ -55,7 +59,7 @@ const RoverContainer = ({ bannedAttributes, onBan, history, setHistory}) => {
             );
         });
 
-
+        // picking a random photo and setting non-banned attributes
         if (validPhotos.length > 0) {
             const randomPhoto = validPhotos[Math.floor(Math.random() * validPhotos.length)];
             const imgURL = randomPhoto.img_src.replace("http://", "https://")

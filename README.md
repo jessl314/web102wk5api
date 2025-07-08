@@ -44,18 +44,14 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://imgur.com/a/7Tz4RJI.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-<!-- Replace this with whatever GIF tool you used! -->
-GIF created with ...  
-<!-- Recommended tools:
-[Kap](https://getkap.co/) for macOS
-[ScreenToGif](https://www.screentogif.com/) for Windows
-[peek](https://github.com/phw/peek) for Linux. -->
+GIF created with LICEcap
+
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+I had a couple of challenges with the NASA api. The first one being that I could only get images from one of the three rovers which it took me a couple hours to figure out that it was due to the image urls for the unused rovers being from a different api. Secondly I did deal with the rate limit for API calls. This project is also a bit more complex than I was used to as I implemented the stretch features. This was the most components I've ever used and I struggled a little with keeping track of what was what.
 
 ## License
 
