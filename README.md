@@ -44,7 +44,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-![Video Walkthrough](veniveci3.gif)
+![Video Walkthrough](venivici3.gif)
 
 GIF created with LICEcap
 
