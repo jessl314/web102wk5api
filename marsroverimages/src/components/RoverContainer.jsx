@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import './RoverContainer.css'
+import AttributeDisplay from './AttributeDisplay'
 const ACCESS_KEY = import.meta.env.VITE_APP_NASA_API_KEY
 
 const rovers = ["curiosity"]
@@ -7,6 +8,7 @@ const rovers = ["curiosity"]
 const RoverContainer = () => {
     const [image, setImage] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [attributes, setAttributes] = useState([]);
 
     const getImage = async () => {
         setLoading(true);
@@ -29,12 +31,25 @@ const RoverContainer = () => {
         if (photos.length > 0) {
             const randomPhoto = photos[Math.floor(Math.random() * photos.length)];
             setImage(randomPhoto.img_src.replace("http://", "https://"))
+
+            // getting attributes
+            const attrs = [
+                { label: "Camera", value: randomPhoto.camera.full_name },
+                { label: "Sol", value: randomPhoto.sol },
+                { label: "Earth Date", value: randomPhoto.earth_date },
+                { label: "Status", value: randomPhoto.rover.status },
+                { label: "Landing Date", value: randomPhoto.rover.landing_date},
+                { label: "Launching Date", value: randomPhoto.rover.launch_date}
+            ]
+            setAttributes(attrs);
         } else {
             setImage(null);
+            setAttributes([]);
         } 
     } catch (err) {
          console.error("Error fetching rover image:", err);
-            setImage(null);
+         setImage(null);
+         setAttributes([]);
 
         }
         setLoading(false);
@@ -45,9 +60,12 @@ const RoverContainer = () => {
         <div className="rover-container">
             <h1>Veni Veci!</h1>
             <h3>Here are some cool rover images!</h3>
-            <button className="button" onClick={getImage}>Discover!</button>
+            {attributes.length > 0 && <AttributeDisplay attributes={attributes} />}
+            <br></br>
             {loading && <p>Loading...</p>}
-            {image ? <img src={image} alt="Mars Rover"/> : !loading && <p>No image found. Try again!</p> }
+            {image ? <img src={image} alt="Mars Rover" className="rover-image"/> : !loading && <p>No image found. Try again!</p> }
+            <br></br>
+            <button className="button" onClick={getImage}>Discover!</button>
 
         </div>
     );

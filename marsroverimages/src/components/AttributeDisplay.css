@@ -1,0 +1,17 @@
+.attributes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  gap: 12px;
+  margin-top: 1rem;
+}
+
+.attr-rect {
+  /* padding: 10px 15px; */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  min-width: 120px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding-right: 0.2rem;
+  padding-left: 0.2rem;
+}
